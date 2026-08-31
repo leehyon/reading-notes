@@ -1,7 +1,39 @@
 ---
-title: Welcome to Quartz 5
+title: Welcome to Vorlesung
 ---
 
-Quartz is a fast, batteries-included static-site generator that transforms Markdown content into fully functional websites. Thousands of students, developers, and teachers publish personal notes, wikis, and [digital gardens](https://jzhao.xyz/posts/networked-thought) to the web.
+这里是一个以书籍和知识整理为中心的 AI 导读站。
 
-See the [official documentation](https://quartz.jzhao.xyz/) for more details.
+> 本站收录的内容均由 AI 生成，主要用于快速了解一本书的结构、提炼核心观点，并建立可以继续深入阅读的知识索引。它不是原书的替代品，也不代表作者或出版社的原意。
+
+## 如何阅读
+
+每篇导读尽量回答以下问题：
+
+- 这本书或这一章主要讲了什么？
+- 哪些观点最值得记住？
+- 这些观点在工程实践中如何使用？
+- AI 能帮助我们做什么，又有哪些边界？
+- 读完之后可以采取哪些具体行动？
+
+导读中的结论、示例和引用仍可能存在遗漏或错误。遇到重要技术决策、专业判断或事实核查时，请以原书、官方文档和可复现的实践为准。
+
+## 当前书目
+
+### [Effective C (2020)](effective-c-2020/README.md)
+
+Robert C. Seacord 著，面向专业 C 编程的系统阅读笔记。
+
+- [整书知识体系总图](effective-c-2020/00-knowledge-graph.md)
+- 覆盖 C 语言标准、类型与表示、表达式与控制流、内存管理、程序结构，以及调试、测试和分析
+- 每章包含章节概述、核心 Takeaways、工程实践视角、AI 时代视角、行动项和思考问题
+
+## 内容声明
+
+本站内容是 AI 生成的阅读辅助材料，经过整理但不保证绝对准确、完整或及时。请将它作为：
+
+1. 阅读原书前的路线图；
+2. 阅读过程中的速查索引；
+3. 阅读之后用于复习和联想的知识卡片。
+
+愿这些笔记帮助你更快进入一本书，也愿你最终回到书本、实践和自己的判断。

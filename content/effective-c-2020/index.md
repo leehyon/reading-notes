@@ -5,7 +5,6 @@ title: Effective C
 **书名**: Effective C: An Introduction to Professional C Programming
 **作者**: Robert C. Seacord
 **出版社**: No Starch Press, 2020
-**ISBN**: 978-1-71850-104-1
 **原文路径**: `dev/books/Effective_C_2020.pdf`
 
 ## 阅读约定

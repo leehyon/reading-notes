@@ -5,9 +5,7 @@ title: Working Effectively with Legacy Code
 **书名**: Working Effectively with Legacy Code
 **作者**: Michael C. Feathers
 **出版社/年份**: Prentice Hall (Robert C. Martin Series), 2004 (本 PDF 版次 2005)
-**ISBN**: 0-13-117705-2
 **原文路径**: `dev/books/Working_Effectively_with_Legacy_Code_2005.pdf`
-**页数**: 456 物理页 (印刷页码 ~21-457)
 
 ## 阅读约定
 
@@ -20,10 +18,6 @@ title: Working Effectively with Legacy Code
 6. 值得深入思考的问题
 
 末尾追加 `*下一章预告*`。
-
-## Knowledge Graph
-
-全书概念关系、章节映射和三条阅读路径见：[knowledge-graph. md](knowledge-graph. md)。图谱只整理本书内容，不与其他书的笔记交叉引用。
 
 ## 章节索引
 

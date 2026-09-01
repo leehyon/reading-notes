@@ -1,4 +1,4 @@
-# Working Effectively with Legacy Code — Knowledge Graph
+# 知识体系总图
 
 > 本图谱只整理本书内部的概念、技法和章节关系，不与其他书的笔记交叉引用。
 

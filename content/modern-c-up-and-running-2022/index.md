@@ -5,9 +5,7 @@ title: Modern C
 **书名**: Modern C: Up and Running — A Programmer's Guide to Finding Fluency and Bypassing the Quirks
 **作者**: Martin Kalin (DePaul University, Ph.D. Northwestern)
 **出版社**: Apress, 2022
-**ISBN**: 978-1-4842-8675-3 (pbk) / 978-1-4842-8676-0 (electronic)
 **原文路径**: `dev/books/Modern_C_Up_and_Running_2022.pdf`
-**技术审校**: Germán González-Morris
 
 ## 阅读约定
 

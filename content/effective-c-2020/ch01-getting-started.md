@@ -173,25 +173,59 @@ cc -std=c17 -Wall -Wextra -Werror -Wpedantic \
 **验收**：`exit=0`、Sanitizer 无报告。
 
 ### 行动 2: 主动触发一个 UB，亲眼看看 ASan/UBSan 怎么报
-```c
+```bash
+cat > /tmp/mc.c <<'EOF'
 #include <limits.h>
 #include <stdio.h>
-int main(void) {
-    int x = INT_MAX;
-    x = x + 1;   // signed overflow -> UB
-    printf("x = %d\n", x);
-}
+int main(void) { int x = INT_MAX; x = x + 1; printf("x = %d\n", x); }
+EOF
+cc -std=c17 -Wall -Wextra -fsanitize=undefined -g -O0 -o /tmp/ub /tmp/mc.c && /tmp/ub
 ```
 观察 UBSan 输出 `runtime error: signed integer overflow`。**目的：把"UB 是模糊概念"转成"看得见的崩溃报告"**。
 
 ### 行动 3: 对比 `puts` vs `printf("%s\n", s)` 的代码大小与时间
+
+> 下面命令需要在 Bash（Linux、macOS 或 WSL）中运行，并需要安装 C 编译器和 `size`。在 Windows PowerShell 中不能直接运行这段 Bash。
+
 ```bash
+set -eu
+
+CC="${CC:-cc}"
+command -v "$CC" >/dev/null 2>&1 || {
+    echo "找不到 C 编译器：$CC（可设置 CC=gcc 或 CC=clang）" >&2
+    exit 1
+}
+command -v size >/dev/null 2>&1 || {
+    echo "找不到 size 命令：请安装 binutils（macOS 通常已自带）" >&2
+    exit 1
+}
+
+tmpdir="$(mktemp -d "${TMPDIR:-/tmp}/puts-vs-printf.XXXXXX")"
+trap 'rm -rf "$tmpdir"' EXIT
+
+cat > "$tmpdir/hello_puts.c" <<'EOF'
+#include <stdio.h>
+#include <stdlib.h>
+int main(void) { if (puts("Hello, world!") == EOF) return EXIT_FAILURE; return EXIT_SUCCESS; }
+EOF
+
+cat > "$tmpdir/hello_printf.c" <<'EOF'
+#include <stdio.h>
+#include <stdlib.h>
+int main(void) { if (printf("%s\n", "Hello, world!") < 0) return EXIT_FAILURE; return EXIT_SUCCESS; }
+EOF
+
 for f in puts printf; do
-    cc -std=c17 -O2 -o /tmp/test_$f /home/koh/dev/notes/effective-c-2020/samples/ch01/hello_$f.c
-    size /tmp/test_$f
+    "$CC" -std=c17 -Wall -Wextra -O2 \
+        -o "$tmpdir/test_$f" "$tmpdir/hello_$f.c"
+    printf '%s:\n' "$f"
+    size "$tmpdir/test_$f"
 done
+
+echo "可选：使用 time 或 hyperfine 对两个可执行文件分别进行多次基准测试。"
 ```
-建立直觉：printf 通常比 puts 大 10x+（带格式化器 + 浮点）。
+
+`size` 输出的是可执行文件的 text/data/bss 等段大小，不等于运行时加载的全部代码；动态链接、编译器、优化级别和 C 运行库都会影响结果。因此，这个实验用于建立直觉，不应预先断言 `printf` 一定比 `puts` 大多少。
 
 ### 行动 4: 用 grep 在你现有项目里搜 format string 漏洞
 ```bash
@@ -202,8 +236,15 @@ grep -rnE 'printf\(([a-z_][a-z0-9_]*[ \t]*[,)]' src/ 2>/dev/null | head
 
 ### 行动 5: 装一遍 GCC/Clang 默认标准
 ```bash
+# GCC 部分 (clang 部分取决于系统装没装; 没装就跳过)
+echo "--- GCC 默认标准 ---"
 gcc -dM -E - < /dev/null | grep -E "__STDC_VERSION__|__GNUC__"
-clang -dM -E - < /dev/null | grep -E "__STDC_VERSION__|__clang_major__"
+echo "--- Clang (若装了) ---"
+if command -v clang >/dev/null 2>&1; then
+    clang -dM -E - < /dev/null | grep -E "__STDC_VERSION__|__clang_major__"
+else
+    echo "clang: command not found (apt install clang 即可补全)"
+fi
 ```
 看默认 `__STDC_VERSION__` 是多少（很可能不是 201710L = C17）。这影响每个未来你写的 `.c` 文件。
 

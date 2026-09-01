@@ -187,7 +187,7 @@ int main(void) {
     printf("int8=%zu int16=%zu int32=%zu int64=%zu\n",
            sizeof(int8_t), sizeof(int16_t), sizeof(int32_t), sizeof(int64_t));
     printf("float=%zu double=%zu long double=%zu\n",
-           sizeof(float), sizeof(double), sizeof(long long double));
+           sizeof(float), sizeof(double), sizeof(long double));
     printf("FLT_EPSILON=%.10e DBL_EPSILON=%.10e\n", FLT_EPSILON, DBL_EPSILON);
     return 0;
 }

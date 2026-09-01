@@ -259,6 +259,7 @@ cat > shmem.h <<'EOF'
 EOF
 
 cat > shm_writer.c <<'EOF'
+#define _GNU_SOURCE
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/mman.h>

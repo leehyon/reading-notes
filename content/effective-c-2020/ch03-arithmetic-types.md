@@ -211,47 +211,55 @@ cc -std=c17 -Wall -Wextra -O2 -o /tmp/wrapcheck /tmp/wrapcheck.c && /tmp/wrapche
 **预期**：bad 永远返回 0（因为已经 wrap）；good 正确返回 1。
 
 ### 行动 3: 演示混合符号比较的"惊喜"
-```c
+```bash
+cat > /tmp/mixsign.c <<'EOF'
 #include <stdio.h>
 #include <stdint.h>
 int main(void) {
     int8_t c = -1;
     uint32_t ui = UINT32_MAX;
-    printf("c == ui ? %d\n", c == ui);     // 真！
+    printf("c == ui ? %d\n", c == ui);
     printf("-1 == UINT_MAX in C's eyes.\n");
     return 0;
 }
+EOF
+cc -std=c17 -Wall -Wextra -o /tmp/mixsign /tmp/mixsign.c && /tmp/mixsign
 ```
 **预期**：打印 1。**目的**：把"看起来明显不等"的代码变成可观测事实。
 
 ### 行动 4: 演示浮点不能做循环计数器
-```c
+```bash
+cat > /tmp/floatcount.c <<'EOF'
 #include <stdio.h>
 int main(void) {
     int count = 0;
     for (float f = 0.0f; f < 1.0f; f += 0.1f) count++;
     printf("Iterations (should be 10): %d\n", count);
-    // 修复方案：用整数计数
     count = 0;
-    for (int i = 0; i < 10; i++) { float f = i * 0.1f; count++; }
+    for (int i = 0; i < 10; i++) { (void)(i * 0.1f); count++; }
     printf("Iterations (integer loop): %d\n", count);
     return 0;
 }
+EOF
+cc -std=c17 -Wall -Wextra -o /tmp/floatcount /tmp/floatcount.c && /tmp/floatcount
 ```
 **预期**：第一次打印可能是 9、10 或 11（看编译器实现）；第二次精确是 10。
 
 ### 行动 5: 触发 NaN 传播，演示其传染性
-```c
+```bash
+cat > /tmp/nanprop.c <<'EOF'
 #include <math.h>
 #include <stdio.h>
 int main(void) {
-    double x = 0.0 / 0.0;       // NaN
-    double y = x + 1.0;         // NaN
-    double z = y * 3.0;         // NaN
-    printf("NaN == NaN ? %d\n", x == x);   // 0
-    printf("isnan(NaN) ? %d\n", isnan(x)); // 1
+    double x = 0.0 / 0.0;
+    double y = x + 1.0;
+    double z = y * 3.0;
+    printf("NaN == NaN ? %d\n", x == x);
+    printf("isnan(NaN) ? %d\n", isnan(x));
     return 0;
 }
+EOF
+cc -std=c17 -Wall -Wextra -o /tmp/nanprop /tmp/nanprop.c -lm && /tmp/nanprop
 ```
 **目的**：让 NaN 这个"看不见的传染源"变得具体可观察。
 

@@ -311,7 +311,7 @@ cat > /tmp/generic.c <<'EOF'
 int main(void) {
     int i = 0;
     double d = 0.0;
-    char *s = "hi;
+    char *s = "hi";
     printf("i is %s\n", TYPE_NAME(i));
     printf("d is %s\n", TYPE_NAME(d));
     printf("s is %s\n", TYPE_NAME(s));

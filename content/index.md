@@ -20,12 +20,20 @@ title: Welcome to Vorlesung
 
 ## 当前书目
 
-### [Effective C (2020)](effective-c-2020/README.md)
+### [Effective C (2020)](effective-c-2020/index.md)
 
 Robert C. Seacord 著，面向专业 C 编程的系统阅读笔记。
 
 - [整书知识体系总图](effective-c-2020/00-knowledge-graph.md)
 - 覆盖 C 语言标准、类型与表示、表达式与控制流、内存管理、程序结构，以及调试、测试和分析
+- 每章包含章节概述、核心 Takeaways、工程实践视角、AI 时代视角、行动项和思考问题
+
+### [Modern C: Up and Running (2022)](modern-c-up-and-running-2022/index.md)
+
+Martin Kalin 著，偏重 Linux 系统编程、网络、并发与工程实践的现代 C 导读。
+
+- [整书知识体系总图](modern-c-up-and-running-2022/00-knowledge-graph.md)
+- 覆盖程序结构、基本数据类型、聚合类型与指针、存储类别、输入输出、网络、并发与并行，以及 WebAssembly 等主题
 - 每章包含章节概述、核心 Takeaways、工程实践视角、AI 时代视角、行动项和思考问题
 
 ## 内容声明

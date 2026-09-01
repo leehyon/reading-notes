@@ -1,4 +1,6 @@
-# Modern C: Up and Running (2022) — 阅读笔记
+---
+title: Modern C
+---
 
 **书名**: Modern C: Up and Running — A Programmer's Guide to Finding Fluency and Bypassing the Quirks
 **作者**: Martin Kalin (DePaul University, Ph.D. Northwestern)
@@ -48,11 +50,3 @@
 | 7 | Concurrency and Parallelism | 246-304 (59p) | ✅ [ch07-concurrency-parallelism.md](ch07-concurrency-parallelism.md) |
 | 8 | Miscellaneous Topics | 305-358 (54p) | ✅ [ch08-miscellaneous.md](ch08-miscellaneous.md) |
 
-## 抽文缓存
-
-所有章抽文位于 `.cache/<ch>.txt`（pymupdf 1.28.2 抽自物理页码），方便重读与重写。
-
-## 阅读进度
-
-- 2026-08-31 启动
-- 2026-08-31 全部 8 章 + 00-knowledge-graph 完成（~224 KB + 21 KB 总图）

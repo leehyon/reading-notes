@@ -365,11 +365,13 @@ int main(void) {
 }
 EOF
 gcc -std=c11 -Wall -Wextra -o nonblock nonblock.c
-# 普通文件几乎不会 EAGAIN (内核提前预读), 改用管道试
+# 普通文件几乎不会 EAGAIN (内核提前预读), 改用 FIFO 管道试
 mkfifo /tmp/np 2>/dev/null
-./fifo_writer </tmp/np 2>/dev/null & WPID=$!
-cat /tmp/np | timeout 1 ./nonblock
-kill $WPID 2>/dev/null; rm -f /tmp/np
+# 简单 writer: 直接打开 FIFO 写端; nonblock.c 是 reader
+printf 'test\n' > /tmp/np &
+timeout 1 ./nonblock
+wait $! 2>/dev/null
+rm -f /tmp/np
 ```
 **验收**：从管道读会看到 `success=N again=M error=0`（非阻塞 + usleep 退避）；**没有 CPU 100%**。
 

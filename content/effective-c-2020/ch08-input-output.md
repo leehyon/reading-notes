@@ -237,6 +237,7 @@ cat /tmp/out.txt
 cat > /tmp/fseek_big.c <<'EOF'
 #include <stdio.h>
 #include <stdint.h>
+#include <limits.h>
 int main(void) {
     printf("sizeof(long) = %zu bytes\n", sizeof(long));
     printf("Max LONG_MAX offset = %ld\n", LONG_MAX);

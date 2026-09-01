@@ -211,7 +211,8 @@ cc -std=c17 -fsanitize=undefined -g -O1 -o /tmp/castconst /tmp/castconst.c
 **预期**：UBSan 报错；编译器在 `-O2` 下可能把 `i` 缓存到寄存器，所以打印仍是 1——**这是 UB 的具体表现**：编译器可以"完全忽略"。
 
 ### 行动 4: 演示 `restrict` 的契约
-```c
+```bash
+cat > /tmp/restrict_demo.c <<'EOF'
 #include <string.h>
 #include <stdio.h>
 void fast_copy(int * restrict dst, const int * restrict src, size_t n) {
@@ -219,11 +220,13 @@ void fast_copy(int * restrict dst, const int * restrict src, size_t n) {
 }
 int main(void) {
     int a[10] = {1,2,3,4,5,6,7,8,9,10};
-    fast_copy(a + 1, a, 5);    // overlap! UB because of restrict
+    fast_copy(a + 1, a, 5);    /* overlap! UB because of restrict */
     for (int i = 0; i < 10; i++) printf("%d ", a[i]);
     printf("\n");
     return 0;
 }
+EOF
+cc -std=c17 -Wall -Wextra -fsanitize=undefined -g -O2 -o /tmp/restrict_demo /tmp/restrict_demo.c && /tmp/restrict_demo
 ```
 **预期**：结果可能是正确的、也可能是错的——因为 UB。**教训**：`restrict` 不是"免费加速"，是契约。
 
@@ -231,6 +234,7 @@ int main(void) {
 ```bash
 cat > /tmp/align.c <<'EOF'
 #include <stdio.h>
+#include <stdint.h>
 #include <stdalign.h>
 struct S { int i; double d; char c; };
 _Alignas(64) char cache_aligned_buf[sizeof(struct S)];  // 64B cache line

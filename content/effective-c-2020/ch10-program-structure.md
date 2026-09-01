@@ -219,8 +219,8 @@
 
 ### 行动 1: 演示 opaque type 双 header 模式
 ```bash
-mkdir -p /tmp/opaque_demo && cd /tmp/opaque_demo
-cat > collection.h <<'EOF'
+mkdir -p /tmp/opaque_demo
+cat > /tmp/opaque_demo/collection.h <<'EOF'
 #ifndef COLLECTION_H
 #define COLLECTION_H
 #include <stddef.h>
@@ -231,14 +231,14 @@ extern int add_to_collection(collection_type *col, int value);
 extern size_t count_collection(const collection_type *col);
 #endif
 EOF
-cat > collection_internal.h <<'EOF'
+cat > /tmp/opaque_demo/collection_internal.h <<'EOF'
 #ifndef COLLECTION_INTERNAL_H
 #define COLLECTION_INTERNAL_H
 #include "collection.h"
 struct collection_type { size_t count; int *data; size_t cap; };
 #endif
 EOF
-cat > collection.c <<'EOF'
+cat > /tmp/opaque_demo/collection.c <<'EOF'
 #include "collection_internal.h"
 #include <stdlib.h>
 int create_collection(collection_type **out) {
@@ -259,7 +259,7 @@ int add_to_collection(collection_type *col, int value) {
 }
 size_t count_collection(const collection_type *col) { return col->count; }
 EOF
-cat > main.c <<'EOF'
+cat > /tmp/opaque_demo/main.c <<'EOF'
 #include <stdio.h>
 #include "collection.h"   // 注意：只 include 外部 header
 int main(void) {
@@ -272,7 +272,7 @@ int main(void) {
     return 0;
 }
 EOF
-cc -std=c17 -Wall -I. main.c collection.c -o /tmp/opaque_demo/app && /tmp/opaque_demo/app
+cc -std=c17 -Wall -I/tmp/opaque_demo /tmp/opaque_demo/main.c /tmp/opaque_demo/collection.c -o /tmp/opaque_demo/app && /tmp/opaque_demo/app
 ```
 **预期**：编译成功；main.c **没有** access `c->count`（opaque），所有访问走 API。
 

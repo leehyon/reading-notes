@@ -276,9 +276,12 @@ int main(void) {
     const int* p1 = &a;    /* 指向 const int 的指针：数据不可变 */
     int* const p2 = &a;    /* const 指针：指针本身不可变 */
     const int* const p3 = &a;  /* 都不可变 */
+    (void)p3;               /* 避免 -Werror unused-variable */
     /* *p1 = 5; */        /* 编译错 */
     p1 = &b;               /* OK */
-    p2 = &b;               /* 编译错 */
+#if 0
+    p2 = &b;               /* 编译错（放在 #if 0 仅为展示） */
+#endif
     *p2 = 5;               /* OK */
     /* *p3 = 5; p3 = &b; */  /* 都错 */
     printf("a=%d *p2=%d *p1=%d\n", a, *p2, *p1);

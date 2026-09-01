@@ -1,4 +1,6 @@
-# Effective C (2020) — 阅读笔记
+---
+title: Effective C
+---
 
 **书名**: Effective C: An Introduction to Professional C Programming
 **作者**: Robert C. Seacord

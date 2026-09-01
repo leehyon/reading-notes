@@ -36,6 +36,14 @@ Martin Kalin 著，偏重 Linux 系统编程、网络、并发与工程实践的
 - 覆盖程序结构、基本数据类型、聚合类型与指针、存储类别、输入输出、网络、并发与并行，以及 WebAssembly 等主题
 - 每章包含章节概述、核心 Takeaways、工程实践视角、AI 时代视角、行动项和思考问题
 
+### [Working Effectively with Legacy Code (2005)](working-legacy-code-2005/index.md)
+
+Michael C. Feathers 著，面向遗留代码安全修改与渐进式改造的实践导读。
+
+- [整书知识体系总图](working-legacy-code-2005/00-knowledge-graph.md)
+- 覆盖反馈建立、行为感知、代码与依赖分离、Seam 模型、测试隔离、重构，以及依赖拆分技术
+- 按“问题症状”组织工程实践，帮助在缺少测试和结构混乱的代码库中逐步建立安全修改能力
+
 ## 内容声明
 
 本站内容是 AI 生成的阅读辅助材料，经过整理但不保证绝对准确、完整或及时。请将它作为：
